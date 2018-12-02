@@ -26,10 +26,14 @@ public class ParkingBoyResource {
 
     @PostMapping
     public ResponseEntity<String> add(@RequestBody ParkingBoy parkingBoy){
-        if(parkingBoyRepository.save(parkingBoy)!=null) {
-            return ResponseEntity.created(URI.create("/parkingboys/" + parkingBoy.getId())).build();
+        try{
+            parkingBoyRepository.save(parkingBoy);
+            return ResponseEntity.created(URI.create("/parkingboys/" + parkingBoy.getEmployeeId())).build();
         }
-        return ResponseEntity.badRequest().build();
+        catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
 
